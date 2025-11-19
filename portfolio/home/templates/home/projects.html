@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <title>Projects</title>
+    <style>
+        .arrow-overlay {
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+        background: rgba(255, 255, 255, 0.85);
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        font-size: 24px;
+        color: black;
+        transition: 0.25s ease;
+    }
+
+    .arrow-overlay:hover {
+        background: black;
+        color: white;
+        transform: scale(1.15);
+    }
+    .arrow-overlay {
+    z-index: 20;
+    pointer-events: auto;
+    }
+
+    .carousel-item img {
+    width: 100%;           /* Full width of the carousel container */
+    height: 400px;         /* Set all images to same height */
+    object-fit: cover;     /* Crops image nicely without stretching */
+    border-radius: 20px;   /* Optional: rounded corners */
+    }
+
+
+</style>
+
+</head>
+<body>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <h1>Chatbot</h1>
+            <div class="col-lg-6 col-md-8 col-sm-12">
+
+            <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+                
+                <div class="carousel-inner">
+
+                <div class="carousel-item active">
+                    <img src="{% static 'images/chatbot/image1.png' %}" class="d-block w-100 rounded shadow" alt="Chatbot 1">
+                    <a href="https://myChatbot-gnkt.onrender.com" class="arrow-overlay" target="_blank" data-bs-slide="none">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="carousel-item">
+                    <img src="{% static 'images/chatbot/image2.png' %}" class="d-block w-100 rounded shadow" alt="Chatbot 2">
+                    <a href="https://myChatbot-gnkt.onrender.com" class="arrow-overlay" target="_blank" data-bs-slide="none">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="carousel-item">
+                    <img src="{% static 'images/chatbot/image3.png' %}" class="d-block w-100 rounded shadow" alt="Chatbot 3">
+                    <a href="https://myChatbot-gnkt.onrender.com" class="arrow-overlay" target="_blank" data-bs-slide="none">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+
+                </div>
+
+                <!-- Optional arrows -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+                </button>
+
+                <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+                </button>
+
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
