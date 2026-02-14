@@ -177,7 +177,8 @@
 			 <br><br>
 			<h3 style="text-align: center;">Get In Touch</h3>
 
-			<form id="contact-form" >
+			<form id="contact-form" method="POST" action="{% url 'contact:contact_details' %}">
+				{% csrf_token %}
 				<a name="contact"></a>
 
 				<label>Name</label>
@@ -194,6 +195,14 @@
 
 				<input id="submit-btn" type="submit" value="Send">
 			</form>
+
+			{% if messages %}
+				<ul>
+					{% for message in messages %}
+						<li>{{ message }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
 		</div>
 	</section> 
 	<!-- Footer -->
