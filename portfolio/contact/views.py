@@ -17,7 +17,7 @@ def contact_details(request):
                 email=email,
                 message=message_text
             )
-            messages.success(request, "Your message has been sent successfully!")
+            # messages.success(request, "Your message has been sent successfully!")
             return redirect('index')  # redirect to homepage or wherever
         # else:
         #     messages.error(request, "Please fill all the fields!")
