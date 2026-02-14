@@ -11,6 +11,7 @@ env/
 venv/
 
 # env
+.env
 ./portfolio/env
 
 # Django
