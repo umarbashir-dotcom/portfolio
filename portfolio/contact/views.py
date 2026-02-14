@@ -18,9 +18,9 @@ def contact_details(request):
                 message=message_text
             )
             messages.success(request, "Your message has been sent successfully!")
-            return redirect('home:index')  # redirect to homepage or wherever
-        else:
-            messages.error(request, "Please fill all the fields!")
+            return redirect('index')  # redirect to homepage or wherever
+        # else:
+        #     messages.error(request, "Please fill all the fields!")
 
     # If GET request, optionally redirect or render a form
-    return redirect('home:index')
+    return redirect('index')
