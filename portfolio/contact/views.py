@@ -6,14 +6,14 @@ from django.contrib import messages
 def contact_details(request):
     if request.method == "POST":
         name = request.POST.get('name')
-        subject = request.POST.get('subject')
+        # subject = request.POST.get('subject')
         email = request.POST.get('email')
         message_text = request.POST.get('message')
 
         if name and email and message_text:
             ContactMessage.objects.create(
                 name=name,
-                subject = subject,
+                # subject = subject,
                 email=email,
                 message=message_text
             )
