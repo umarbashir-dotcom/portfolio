@@ -3,24 +3,27 @@ from django.shortcuts import render, redirect
 from .models import ContactMessage
 from django.contrib import messages
 
-def contact_details(request):
+def submit_contact_form(request):
     if request.method == "POST":
-        name = request.POST.get('name')
-        # subject = request.POST.get('subject')
-        email = request.POST.get('email')
-        message_text = request.POST.get('message')
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        message = request.POST.get("message")
 
-        if name and email and message_text:
+        if not name or not email or not message:
+            messages.error(request, "Please fill all the fields!")
+            return redirect("home:index")
+
+        try:
             ContactMessage.objects.create(
                 name=name,
-                # subject = subject,
                 email=email,
-                message=message_text
+                message=message
             )
-            # messages.success(request, "Your message has been sent successfully!")
-            return redirect('index')  # redirect to homepage or wherever
-        # else:
-        #     messages.error(request, "Please fill all the fields!")
 
-    # If GET request, optionally redirect or render a form
-    return redirect('index')
+            messages.success(request, "Message sent successfully")
+
+        except Exception:
+            messages.error(request, "Something went wrong! Please try again.")
+
+    return redirect("home:index")
+

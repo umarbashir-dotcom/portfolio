@@ -3,5 +3,6 @@ body{
 }
 header{
     padding: 30px;
+    padding-bottom: 15px;
     color: black;
 }

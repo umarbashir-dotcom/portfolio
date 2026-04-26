@@ -21,6 +21,11 @@ a .nav-link.active {
 	font-size: normal;
 	color:green;
 }
+/* Navbar (Bootstrap default feel) */
+.navbar,
+.navbar * {
+    font-family: system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+}
 
 html, body{
 	padding: 0;

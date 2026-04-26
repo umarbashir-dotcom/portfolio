@@ -17,13 +17,12 @@
 	<link rel="stylesheet" href="{% static 'css/default.css' %}">
 	<link id="theme-style" rel="stylesheet" type="text/css" href="">
 	
-	
     <title>Umar's Porfolio</title>
 
 </head>
 <body>
 	<!-- Navbar -->
-	{% include 'navbar.html' %}
+	{% include 'includes/navbar.html' %}
 
     <section class="s1">
         <div class="main-container">
@@ -177,37 +176,51 @@
 			 <br><br>
 			<h3 style="text-align: center;">Get In Touch</h3>
 
-			<form id="contact-form" method="POST" action="{% url 'contact:contact_details' %}">
+			<form id="contact-form" method="POST" action="{% url 'contact:submit_contact_form' %}">
 				{% csrf_token %}
 				<a name="contact"></a>
 
 				<label>Name</label>
-				<input class="input-field" type="text" name="name">
+				<input class="input-field" type="text" name="name"required>
 
-				<!-- <label>Subject</label>
-				<input class="input-field" type="text" name="subject"> -->
 
 				<label>Email</label>
-				<input class="input-field" type="text" name="email">
+				<input class="input-field" type="text" name="email"required>
 
 				<label>Message</label>
-				<textarea class="input-field" name="message"></textarea>
+				<textarea class="input-field" name="message"required></textarea>
 
 				<input id="submit-btn" type="submit" value="Send">
 			</form>
 
-			{% if messages %}
-				<ul>
-					{% for message in messages %}
-						<li>{{ message }}</li>
-					{% endfor %}
-				</ul>
-			{% endif %}
+			<div class="toast-container position-fixed bottom-0 end-0 p-3">
+				{% for message in messages %}
+					<div class="toast align-items-center text-white fade 
+						{% if message.tags == 'success' %}bg-success
+						{% elif message.tags == 'error' %}bg-danger
+						{% else %}bg-primary
+						{% endif %}
+						border-0"
+						role="alert"
+						data-bs-delay="3000"
+						data-bs-autohide="true">
+
+						<div class="d-flex">
+							<div class="toast-body">
+								{{ message }}
+							</div>
+							<button type="button" class="btn-close btn-close-white me-2 m-auto"
+									data-bs-dismiss="toast"></button>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
 		</div>
 	</section> 
 	<!-- Footer -->
-	{% include 'footer.html' %}
-	<script type="text/javascript" src="static/js/script.js"></script>
+	{% include 'includes/footer.html' %}
+	
+	<script src="{% static 'js/script.js' %}?v=2"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js
 "></script>
 

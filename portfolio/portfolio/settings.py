@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     "home",
     "contact",
+    "posts",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -63,7 +64,7 @@ ROOT_URLCONF = "portfolio.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -137,7 +138,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = [ BASE_DIR / "home" / "static" ]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+# STATICFILES_DIRS = [ BASE_DIR / "home" / "static" ]
 
 # Production
 STATIC_ROOT = BASE_DIR / "staticfiles"   # folder for collectstatic
