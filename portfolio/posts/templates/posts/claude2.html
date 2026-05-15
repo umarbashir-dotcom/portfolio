@@ -1,0 +1,279 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Blog</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Code+Pro:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* ───── Base ───── */
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #f4f1eb;
+        }
+
+        /* ───── Page header ───── */
+        .blog-page-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+        }
+
+        @media (max-width: 576px) {
+            .blog-page-title { font-size: 1.7rem; }
+        }
+
+        /* ───── Card shell ───── */
+        .post-card {
+            border: 1px solid rgba(0, 0, 0, 0.07) !important;
+            border-radius: 16px !important;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.10);
+        }
+
+        /* ───── Card header / title strip ───── */
+        .post-card-header {
+            background: #1a3c2b;
+            padding: 1.1rem 1.4rem 1rem;
+            position: relative;
+        }
+
+        /* thin colour accent bar at the very top */
+        .post-card-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4ade80, #16a34a, #166534);
+        }
+
+        .post-card-header h5 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #e8f5ee;
+            line-height: 1.45;
+            margin: 0 0 0;
+            padding-right: 110px;   /* room for the date badge */
+        }
+
+        @media (max-width: 400px) {
+            .post-card-header h5 { padding-right: 0; margin-bottom: 0.6rem; }
+        }
+
+        /* ───── Date badge ───── */
+        .post-date-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(74, 222, 128, 0.15);
+            border: 1px solid rgba(74, 222, 128, 0.30);
+            color: #86efac;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+
+            /* pin to top-right of the header */
+            position: absolute;
+            top: 1.1rem;
+            right: 1.1rem;
+        }
+
+        @media (max-width: 400px) {
+            .post-date-badge {
+                position: static;
+                margin-top: 0.5rem;
+            }
+        }
+
+        /* ───── Card body ───── */
+        .post-card-body {
+            background: #fcfcfc;
+            padding: 1.2rem 1.4rem;
+        }
+
+        /* ───── Post text ───── */
+        .post-text {
+            color: #2d2d2d;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* ───── Code section ───── */
+        .code-section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 0.45rem;
+        }
+
+        .code-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #4ade80;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .post-code-block {
+            background: #0d1f15;
+            border-radius: 10px;
+            border: 1px solid rgba(74, 222, 128, 0.12);
+            padding: 1rem 1.1rem 1rem 1.4rem;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+
+        /* left green line */
+        .post-code-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: #16a34a;
+        }
+
+        .post-code-block pre {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.8rem;
+            color: #86efac;
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-x: auto;
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        @media (max-width: 576px) {
+            .post-code-block pre { font-size: 0.75rem; }
+        }
+
+        /* ───── Empty state ───── */
+        .empty-state {
+            min-height: 55vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #8c8c8c;
+        }
+
+        .empty-state h5 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: #aaa;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    {% include "includes/navbar.html" %}
+
+    <div class="min-vh-100 py-4 py-md-5">
+        <div class="container">
+
+            <!-- ── Page header ── -->
+            <div class="text-center mb-4 mb-md-5">
+                <h1 class="blog-page-title">My Learning Blog</h1>
+                <p class="text-secondary mt-1" style="font-size:0.92rem;">
+                    Daily progress and coding journey
+                </p>
+            </div>
+
+            <!-- ── Posts column ── -->
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-11 col-md-10 col-lg-8">
+
+                    {% if posts %}
+
+                        {% for post in posts %}
+
+                        <div class="post-card mb-4">
+
+                            <!-- Title strip -->
+                            <div class="post-card-header">
+
+                                <!-- Date badge — top-right corner -->
+                                <span class="post-date-badge">
+                                    {{ post.created_at|date:"M j, Y" }}
+                                </span>
+
+                                <h5>{{ post.title }}</h5>
+
+                            </div>
+
+                            <!-- Body -->
+                            <div class="post-card-body">
+
+                                {% if post.text %}
+                                <div class="post-text">
+                                    {{ post.text|linebreaksbr }}
+                                </div>
+                                {% endif %}
+
+                                {% if post.code %}
+                                <div class="code-section-label">
+                                    <span class="code-dot"></span>
+                                    Code Snippet
+                                </div>
+                                <div class="post-code-block">
+                                    <pre>{{ post.code }}</pre>
+                                </div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <div class="empty-state">
+                            <h5>No Posts Available Yet</h5>
+                            <p style="font-size:0.88rem;">Check back soon — notes are on their way.</p>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {% include 'includes/footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
