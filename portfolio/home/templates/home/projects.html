@@ -7,219 +7,529 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <title>Projects</title>
     <style>
-        .arrow-overlay {
-            position: absolute;
-            right: 15px;
-            bottom: 15px;
-            background: rgba(255, 255, 255, 0.85);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
+        /* ===================================================================
+           THEME VARIABLES
+           Change these to match the palette already used on your other pages.
+           Nothing else in this file needs to change if you swap these values.
+           =================================================================== */
+        :root {
+            --color-bg: #F6F7F9;
+            --color-surface: #FFFFFF;
+            --color-ink: #14181F;
+            --color-muted: #5C6470;
+            --color-line: #E4E7EC;
+            --color-accent: #2F5FEA;
+            --color-accent-ink: #1C3FAE;
+            --color-accent-soft: #E8EDFC;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        .projects-page {
+            background: var(--color-bg);
+            font-family: var(--font-body);
+            color: var(--color-ink);
+        }
+
+        .projects-page * {
+            box-sizing: border-box;
+        }
+
+        /* Hero */
+        .projects-hero {
+            padding: clamp(3rem, 8vw, 5rem) 0 clamp(1.75rem, 4vw, 2.5rem);
+            border-bottom: 1px solid var(--color-line);
+        }
+
+        .projects-hero h1 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(2.25rem, 5vw, 3.5rem);
+            letter-spacing: -0.01em;
+            margin-bottom: 0.75rem;
+        }
+
+        .projects-hero p {
+            color: var(--color-muted);
+            font-size: 1.05rem;
+            max-width: 56ch;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Project section */
+        .project {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
             align-items: center;
+            gap: clamp(2rem, 5vw, 4rem);
+            padding: clamp(3rem, 8vw, 5.5rem) 0;
+            border-bottom: 1px solid var(--color-line);
+        }
+
+        .project:last-of-type {
+            border-bottom: none;
+        }
+
+        .project--reverse .project__content {
+            order: 2;
+        }
+
+        .project--reverse .project__frame {
+            order: 1;
+        }
+
+        .project__index {
+            position: absolute;
+            top: clamp(-0.5rem, 1vw, 0.5rem);
+            left: 0;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(3.5rem, 9vw, 6.5rem);
+            line-height: 1;
+            color: var(--color-accent-soft);
+            z-index: 0;
+            user-select: none;
+        }
+
+        .project--reverse .project__index {
+            left: auto;
+            right: 0;
+        }
+
+        .project__content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .project__tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.3rem 0.75rem;
+            border-radius: 999px;
+            background: var(--color-accent-soft);
+            color: var(--color-accent-ink);
+            margin-bottom: 1.1rem;
+        }
+
+        .project__title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(1.75rem, 3vw, 2.4rem);
+            line-height: 1.15;
+            margin-bottom: 0.85rem;
+        }
+
+        .project__desc {
+            color: var(--color-muted);
+            font-size: 1.02rem;
+            line-height: 1.65;
+            max-width: 46ch;
+            margin-bottom: 1.4rem;
+        }
+
+        .project__stack {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0;
+            margin: 0 0 1.6rem;
+        }
+
+        .project__stack li {
+            font-size: 0.83rem;
+            font-weight: 500;
+            padding: 0.35rem 0.7rem;
+            border: 1px solid var(--color-line);
+            border-radius: 8px;
+            color: var(--color-muted);
+            background: var(--color-surface);
+        }
+
+        .project__link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.98rem;
+            color: var(--color-accent-ink);
             text-decoration: none;
-            font-size: 24px;
-            color: black;
-            transition: 0.25s ease;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid var(--color-accent);
+            transition: gap 0.2s ease;
         }
 
-        .arrow-overlay:hover {
-            background: black;
-            color: white;
-            transform: scale(1.15);
+        .project__link:hover {
+            gap: 0.75rem;
+            color: var(--color-accent-ink);
         }
 
-        .arrow-overlay {
-            z-index: 20;
-            pointer-events: auto;
+        .project__link i {
+            font-size: 0.95rem;
         }
 
-        .carousel-item img {
+        /* Frame (browser-style screenshot viewer) */
+        .project__frame {
+            position: relative;
+            z-index: 1;
+            background: var(--color-surface);
+            border: 1px solid var(--color-line);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 24px 48px -28px rgba(20, 24, 31, 0.28);
+        }
+
+        .frame__bar {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.65rem 0.9rem;
+            background: #EEF0F3;
+            border-bottom: 1px solid var(--color-line);
+        }
+
+        .frame__dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #D0D4DA;
+            flex-shrink: 0;
+        }
+
+        .frame__url {
+            margin-left: 0.5rem;
+            font-size: 0.78rem;
+            color: var(--color-muted);
+            background: var(--color-surface);
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            border: 1px solid var(--color-line);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .frame__stage {
+            display: block;
+            line-height: 0;
+        }
+
+        .frame__stage img {
+            display: block;
             width: 100%;
-            /* Full width of the carousel container */
-            height: 400px;
-            /* Set all images to same height */
+            height: auto;
+        }
+
+        .frame__thumbs {
+            display: flex;
+            gap: 0.6rem;
+            padding: 0.85rem;
+            border-top: 1px solid var(--color-line);
+            background: var(--color-surface);
+            overflow-x: auto;
+        }
+
+        .frame__thumb {
+            flex: 0 0 auto;
+            width: 64px;
+            height: 44px;
+            padding: 0;
+            border-radius: 6px;
+            border: 2px solid transparent;
+            overflow: hidden;
+            cursor: pointer;
+            background: none;
+            opacity: 0.55;
+            transition: opacity 0.2s ease, border-color 0.2s ease;
+        }
+
+        .frame__thumb img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            /* Crops image nicely without stretching */
-            border-radius: 20px;
-            /* Optional: rounded corners */
+            display: block;
+        }
+
+        .frame__thumb.is-active,
+        .frame__thumb:hover {
+            opacity: 1;
+            border-color: var(--color-accent);
+        }
+
+        .frame__thumb:focus-visible,
+        .project__link:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 2px;
+        }
+
+        /* Mobile / tablet */
+        @media (max-width: 900px) {
+            .project {
+                grid-template-columns: 1fr;
+            }
+
+            .project--reverse .project__content,
+            .project--reverse .project__frame {
+                order: initial;
+            }
+
+            .project__index {
+                position: static;
+                display: block;
+                margin-bottom: 0.5rem;
+                font-size: clamp(2rem, 12vw, 3rem);
+            }
+
+            .project--reverse .project__index {
+                right: auto;
+            }
+
+            .frame__url {
+                display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .project__link,
+            .frame__thumb {
+                transition: none;
+            }
         }
     </style>
-
 </head>
 
-<body>
+<body class="projects-page">
     <!-- Navbar -->
     {% include 'includes/navbar.html' %}
 
-    <div class="container my-5">
-        <!-- Ledger App -->
-        <div class="row justify-content-center mt-5">
-            <h1>Ledger</h1>
-            <div class="col-lg-6 col-md-8 col-sm-12">
+    <div class="container">
 
-                <div id="ledgerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
-
-                    <div class="carousel-inner">
-
-                        <div class="carousel-item active">
-                            <img src="{% static 'images/ledger/login.png' %}" class="d-block w-100 rounded shadow"
-                                alt="Ledger App 1">
-                            <a href="https://ledger-app-by-umar.vercel.app" class="arrow-overlay" target="_blank"
-                                data-bs-slide="none">
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
-                        </div>
-
-                        <div class="carousel-item">
-                            <img src="{% static 'images/ledger/dashboard.png' %}" class="d-block w-100 rounded shadow"
-                                alt="Ledger App 2">
-                            <a href="https://ledger-app-by-umar.vercel.app" class="arrow-overlay" target="_blank"
-                                data-bs-slide="none">
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
-                        </div>
-
-                        <div class="carousel-item">
-                            <img src="{% static 'images/ledger/modal.png' %}" class="d-block w-100 rounded shadow"
-                                alt="Ledger App 3">
-                            <a href="https://ledger-app-by-umar.vercel.app" class="arrow-overlay" target="_blank"
-                                data-bs-slide="none">
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
-                        </div>
-
-                    </div>
-
-                    <button class="carousel-control-prev" type="button" data-bs-target="#ledgerCarousel"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </button>
-
-                    <button class="carousel-control-next" type="button" data-bs-target="#ledgerCarousel"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- Chatbot -->
-            <div class="row justify-content-center mt-5">
-                <h1>Chatbot</h1>
-                <div class="col-lg-6 col-md-8 col-sm-12">
-
-                    <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
-
-                        <div class="carousel-inner">
-
-                            <div class="carousel-item active">
-                                <img src="{% static 'images/chatbot/image1.png' %}" class="d-block w-100 rounded shadow"
-                                    alt="Chatbot 1">
-                                <a href="https://myChatbot-gnkt.onrender.com" class="arrow-overlay" target="_blank"
-                                    data-bs-slide="none">
-                                    <i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
-
-                            <div class="carousel-item">
-                                <img src="{% static 'images/chatbot/image2.png' %}" class="d-block w-100 rounded shadow"
-                                    alt="Chatbot 2">
-                                <a href="https://myChatbot-gnkt.onrender.com" class="arrow-overlay" target="_blank"
-                                    data-bs-slide="none">
-                                    <i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
-
-                            <div class="carousel-item">
-                                <img src="{% static 'images/chatbot/image3.png' %}" class="d-block w-100 rounded shadow"
-                                    alt="Chatbot 3">
-                                <a href="https://myChatbot-gnkt.onrender.com" class="arrow-overlay" target="_blank"
-                                    data-bs-slide="none">
-                                    <i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
-
-                        </div>
-
-                        <!-- Optional arrows -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </button>
-
-                        <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </button>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- React Jobs App -->
-            <div class="row justify-content-center mt-5">
-                <h1>React Jobs App</h1>
-                <div class="col-lg-6 col-md-8 col-sm-12">
-
-                    <div id="jobsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
-
-                        <div class="carousel-inner">
-
-                            <div class="carousel-item active">
-                                <img src="{% static 'images/react-jobs/dashboard.png' %}" class="d-block w-100 rounded shadow"
-                                    alt="React Jobs App 1">
-                                <a href="https://react-jobs-app-umar.vercel.app" class="arrow-overlay" target="_blank"
-                                    data-bs-slide="none">
-                                    <i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
-
-                            <div class="carousel-item">
-                                <img src="{% static 'images/react-jobs/jobs-page.png' %}" class="d-block w-100 rounded shadow"
-                                    alt="React Jobs App 2">
-                                <a href="https://react-jobs-app-umar.vercel.app" class="arrow-overlay" target="_blank"
-                                    data-bs-slide="none">
-                                    <i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
-
-                            <div class="carousel-item">
-                                <img src="{% static 'images/react-jobs/jobs-page.png' %}" class="d-block w-100 rounded shadow"
-                                    alt="React Jobs App 3">
-                                <a href="https://react-jobs-app-umar.vercel.app" class="arrow-overlay" target="_blank"
-                                    data-bs-slide="none">
-                                    <i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
-
-                        </div>
-
-                        <button class="carousel-control-prev" type="button" data-bs-target="#jobsCarousel"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </button>
-
-                        <button class="carousel-control-next" type="button" data-bs-target="#jobsCarousel"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </button>
-
-                    </div>
-
-                </div>
-            </div>
-
+        <div class="projects-hero">
+            <h1>Projects</h1>
+            <p>A selection of full-stack apps I've built while learning the MERN stack.</p>
         </div>
+
+        <!-- Apna Kiryana -->
+        <section class="project" id="kiryana-store">
+            <span class="project__index" aria-hidden="true">01</span>
+            <div class="project__content">
+                <span class="project__tag">E-commerce</span>
+                <h2 class="project__title">Apna Kiryana</h2>
+                <p class="project__desc">An online grocery store built for a local kiryana shop, with product
+                    browsing and filtering, cart and wishlist, user accounts, and an admin dashboard for managing
+                    products, stock, and orders. Checkout runs through Stripe.</p>
+                <ul class="project__stack">
+                    <li>React</li>
+                    <li>Tailwind CSS</li>
+                    <li>Node.js</li>
+                    <li>Express</li>
+                    <li>MongoDB</li>
+                    <li>Stripe</li>
+                </ul>
+                <a class="project__link" href="https://kiryana-store-jet.vercel.app" target="_blank" rel="noopener">
+                    <span>View live site</span>
+                    <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="project__frame">
+                <div class="frame__bar">
+                    <span class="frame__dot"></span>
+                    <span class="frame__dot"></span>
+                    <span class="frame__dot"></span>
+                    <span class="frame__url">kiryana-store-jet.vercel.app</span>
+                </div>
+                <div class="frame__stage">
+                    <img src="{% static 'images/kiryana-store/home.png' %}" alt="Apna Kiryana home page">
+                </div>
+                <div class="frame__thumbs">
+                    <button class="frame__thumb is-active" type="button"
+                        data-src="{% static 'images/kiryana-store/home.png' %}" data-alt="Apna Kiryana home page"
+                        aria-label="Show home page screenshot">
+                        <img src="{% static 'images/kiryana-store/home.png' %}" alt="">
+                    </button>
+                    <button class="frame__thumb" type="button" data-src="{% static 'images/kiryana-store/cart.png' %}"
+                        data-alt="Apna Kiryana cart page" aria-label="Show cart page screenshot">
+                        <img src="{% static 'images/kiryana-store/cart.png' %}" alt="">
+                    </button>
+                    <button class="frame__thumb" type="button"
+                        data-src="{% static 'images/kiryana-store/dashboard.png' %}"
+                        data-alt="Apna Kiryana admin dashboard" aria-label="Show dashboard screenshot">
+                        <img src="{% static 'images/kiryana-store/dashboard.png' %}" alt="">
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ledger -->
+        <section class="project project--reverse" id="ledger">
+            <span class="project__index" aria-hidden="true">02</span>
+            <div class="project__content">
+                <span class="project__tag">Finance</span>
+                <h2 class="project__title">Ledger</h2>
+                <p class="project__desc">A personal finance tracker for logging income and expenses, with
+                    category budgets, a dark mode, and authenticated, user-scoped transaction history.</p>
+                <ul class="project__stack">
+                    <li>React</li>
+                    <li>Tailwind CSS</li>
+                    <li>Node.js</li>
+                    <li>Express</li>
+                    <li>MongoDB</li>
+                    <li>JWT</li>
+                </ul>
+                <a class="project__link" href="https://ledger-app-by-umar.vercel.app" target="_blank" rel="noopener">
+                    <span>View live site</span>
+                    <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="project__frame">
+                <div class="frame__bar">
+                    <span class="frame__dot"></span>
+                    <span class="frame__dot"></span>
+                    <span class="frame__dot"></span>
+                    <span class="frame__url">ledger-app-by-umar.vercel.app</span>
+                </div>
+                <div class="frame__stage">
+                    <img src="{% static 'images/ledger/login.png' %}" alt="Ledger login page">
+                </div>
+                <div class="frame__thumbs">
+                    <button class="frame__thumb" type="button" data-src="{% static 'images/ledger/dashboard.png' %}"
+                        data-alt="Ledger dashboard" aria-label="Show dashboard screenshot">
+                        <img src="{% static 'images/ledger/dashboard.png' %}" alt="">
+                    </button>
+                    <button class="frame__thumb is-active" type="button" data-src="{% static 'images/ledger/login.png' %}"
+                        data-alt="Ledger login page" aria-label="Show login page screenshot">
+                        <img src="{% static 'images/ledger/login.png' %}" alt="">
+                    </button>
+                    <button class="frame__thumb" type="button" data-src="{% static 'images/ledger/modal.png' %}"
+                        data-alt="Ledger transaction modal" aria-label="Show transaction modal screenshot">
+                        <img src="{% static 'images/ledger/modal.png' %}" alt="">
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chatbot -->
+        <section class="project" id="chatbot">
+            <span class="project__index" aria-hidden="true">03</span>
+            <div class="project__content">
+                <span class="project__tag">Chat</span>
+                <h2 class="project__title">Chatbot</h2>
+                <p class="project__desc">A conversational chat interface built to practice real-time messaging
+                    patterns and simple bot logic from the ground up.</p>
+                <ul class="project__stack">
+                    <li>JavaScript</li>
+                    <li>Node.js</li>
+                </ul>
+                <a class="project__link" href="https://myChatbot-gnkt.onrender.com" target="_blank" rel="noopener">
+                    <span>View live site</span>
+                    <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="project__frame">
+                <div class="frame__bar">
+                    <span class="frame__dot"></span>
+                    <span class="frame__dot"></span>
+                    <span class="frame__dot"></span>
+                    <span class="frame__url">myChatbot-gnkt.onrender.com</span>
+                </div>
+                <div class="frame__stage">
+                    <img src="{% static 'images/chatbot/image1.png' %}" alt="Chatbot screenshot 1">
+                </div>
+                <div class="frame__thumbs">
+                    <button class="frame__thumb is-active" type="button" data-src="{% static 'images/chatbot/image1.png' %}"
+                        data-alt="Chatbot screenshot 1" aria-label="Show screenshot 1">
+                        <img src="{% static 'images/chatbot/image1.png' %}" alt="">
+                    </button>
+                    <button class="frame__thumb" type="button" data-src="{% static 'images/chatbot/image2.png' %}"
+                        data-alt="Chatbot screenshot 2" aria-label="Show screenshot 2">
+                        <img src="{% static 'images/chatbot/image2.png' %}" alt="">
+                    </button>
+                    <button class="frame__thumb" type="button" data-src="{% static 'images/chatbot/image3.png' %}"
+                        data-alt="Chatbot screenshot 3" aria-label="Show screenshot 3">
+                        <img src="{% static 'images/chatbot/image3.png' %}" alt="">
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- React Jobs App -->
+        <section class="project project--reverse" id="react-jobs-app">
+            <span class="project__index" aria-hidden="true">04</span>
+            <div class="project__content">
+                <span class="project__tag">Job board</span>
+                <h2 class="project__title">React Jobs App</h2>
+                <p class="project__desc">A job listings platform where visitors can browse open roles and post
+                    new job listings of their own.</p>
+                <ul class="project__stack">
+                    <li>React</li>
+                    <li>JavaScript</li>
+                    <li>Node.js</li>
+                    <li>MongoDB</li>
+                </ul>
+                <a class="project__link" href="https://react-jobs-app-umar.vercel.app" target="_blank" rel="noopener">
+                    <span>View live site</span>
+                    <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="project__frame">
+                <div class="frame__bar">
+                    <span class="frame__dot"></span>
+                    <span class="frame__dot"></span>
+                    <span class="frame__dot"></span>
+                    <span class="frame__url">react-jobs-app-umar.vercel.app</span>
+                </div>
+                <div class="frame__stage">
+                    <img src="{% static 'images/react-jobs/dashboard.png' %}" alt="React Jobs App dashboard">
+                </div>
+                <div class="frame__thumbs">
+                    <button class="frame__thumb is-active" type="button"
+                        data-src="{% static 'images/react-jobs/dashboard.png' %}" data-alt="React Jobs App dashboard"
+                        aria-label="Show dashboard screenshot">
+                        <img src="{% static 'images/react-jobs/dashboard.png' %}" alt="">
+                    </button>
+                    <button class="frame__thumb" type="button"
+                        data-src="{% static 'images/react-jobs/jobs-page.png' %}" data-alt="React Jobs App jobs page"
+                        aria-label="Show jobs page screenshot">
+                        <img src="{% static 'images/react-jobs/jobs-page.png' %}" alt="">
+                    </button>
+                    <button class="frame__thumb" type="button"
+                        data-src="{% static 'images/react-jobs/add-job-page.png' %}"
+                        data-alt="React Jobs App add job page" aria-label="Show add-job page screenshot">
+                        <img src="{% static 'images/react-jobs/add-job-page.png' %}" alt="">
+                    </button>
+                </div>
+            </div>
+        </section>
+
     </div>
+
     <!-- Footer -->
     {% include 'includes/footer.html' %}
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('.project__frame').forEach(function (frame) {
+            var stageImg = frame.querySelector('.frame__stage img');
+            var thumbs = frame.querySelectorAll('.frame__thumb');
+
+            thumbs.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    stageImg.src = btn.getAttribute('data-src');
+                    stageImg.alt = btn.getAttribute('data-alt') || stageImg.alt;
+                    thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+                    btn.classList.add('is-active');
+                });
+            });
+        });
+    </script>
 
 </body>
 
